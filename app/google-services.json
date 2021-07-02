@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "34312284250",
+    "project_id": "fcmdemo-9e9e4",
+    "storage_bucket": "fcmdemo-9e9e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:34312284250:android:f778e829434510142f9063",
+        "android_client_info": {
+          "package_name": "com.trungdang.fcmdemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "34312284250-pcnr45n7jhv396ljm14aetdpvhkd1fps.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYGLbpfkHFIP5MTyqvuYVQlHM_CudWgQ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "34312284250-pcnr45n7jhv396ljm14aetdpvhkd1fps.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
