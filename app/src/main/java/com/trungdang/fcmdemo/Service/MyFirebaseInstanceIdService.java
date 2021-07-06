@@ -5,10 +5,8 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -37,7 +35,10 @@ public class MyFirebaseInstanceIdService extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
         if(remoteMessage.getData()!=null)
         {
-            sendNotification (remoteMessage);
+            Intent i = new Intent(this, MainActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
+
         }
     }
 
@@ -64,10 +65,20 @@ public class MyFirebaseInstanceIdService extends FirebaseMessagingService {
 
             notificationManager.createNotificationChannel(notificationChannel);
         }
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+//        // Create an Intent for the activity you want to start
+//        Intent resultIntent = new Intent(this, MainActivity.class);
+//// Create the TaskStackBuilder and add the intent, which inflates the back stack
+//        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+//        stackBuilder.addNextIntentWithParentStack(resultIntent);
+//// Get the PendingIntent containing the entire back stack
+//        PendingIntent resultPendingIntent =
+//                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+                new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
+
         NotificationCompat.Builder notificationBuilder=new NotificationCompat.Builder(this,NOTIFICATION_CHANNEL_ID);
 
         notificationBuilder.setAutoCancel(true)
@@ -78,13 +89,11 @@ public class MyFirebaseInstanceIdService extends FirebaseMessagingService {
                 .setContentTitle(title)
                 .setContentText(content)
                 .setContentInfo("info")
-                .setContentIntent(pendingIntent)
                 .setSound(defaultSoundUri);
+
+
 
         notificationManager.notify(1,notificationBuilder.build());
 
-        ComponentName componentName = new ComponentName(this, MainActivity.class);
-        getPackageManager().setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                PackageManager.DONT_KILL_APP);
     }
 }

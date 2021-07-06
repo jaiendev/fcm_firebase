@@ -29,8 +29,7 @@
         </activity>
         <service android:name=".Service.MyFirebaseInstanceIdService" android:exported="false"
             android:permission="true"
-            android:stopWithTask="false"
-            android:directBootAware="true">
+            android:stopWithTask="false">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
