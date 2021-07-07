@@ -8,9 +8,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.inputmethodservice.InputMethodService;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.PowerManager;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -23,7 +25,14 @@ import com.trungdang.fcmdemo.R;
 
 import java.util.Map;
 
+import static android.os.PowerManager.ACQUIRE_CAUSES_WAKEUP;
+import static android.os.PowerManager.FULL_WAKE_LOCK;
+import static android.os.PowerManager.ON_AFTER_RELEASE;
+
 public class MyFirebaseInstanceIdService extends FirebaseMessagingService {
+
+    private InputMethodService activity;
+
     @Override
     public void onNewToken(@NonNull String s) {
         super.onNewToken(s);
@@ -37,6 +46,20 @@ public class MyFirebaseInstanceIdService extends FirebaseMessagingService {
         {
             Intent i = new Intent(this, MainActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            i.setAction(Intent.ACTION_MAIN);
+            i.addCategory(Intent.CATEGORY_LAUNCHER);
+            i.putExtra("foreground", true);
+            i.putExtra("incoming_call", true);
+
+            PowerManager pm = (PowerManager) getApplicationContext()
+                    .getSystemService(Context.POWER_SERVICE);
+
+            @SuppressLint("InvalidWakeLockTag") PowerManager.WakeLock wl1 = pm.newWakeLock(
+                    ACQUIRE_CAUSES_WAKEUP|ON_AFTER_RELEASE|FULL_WAKE_LOCK, "wl1");
+            wl1.acquire(10000);
+
+
             startActivity(i);
 
         }
